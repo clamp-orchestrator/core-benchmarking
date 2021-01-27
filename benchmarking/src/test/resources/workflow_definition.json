@@ -1,0 +1,194 @@
+{
+  "name": "insurance_claim_demo_v100",
+  "description": "insurance claim for MOTOR or MEDICAL",
+  "steps": [
+    {
+      "name": "user authentication",
+      "mode": "HTTP",
+      "val": {
+        "method": "POST",
+        "url": "https://run.mocky.io/v3/f4ee8258-49b1-4579-a8c2-5881a0c65206"
+      }
+    },
+    {
+      "name": "user authorization",
+      "mode": "HTTP",
+      "transform" : true,
+      "requestTransform": {
+        "spec":{
+          "username": "user_authentication.response.username",
+          "userId": "user_authentication.response.id"
+        }
+      },
+      "val": {
+        "method": "POST",
+        "url": "https://run.mocky.io/v3/d9f2e6d1-3100-4ffb-88a4-633e89e1b99c"
+      }
+    },
+    {
+      "name": "get user details",
+      "mode": "HTTP",
+      "transform" : true,
+      "requestTransform": {
+        "spec":{
+          "username": "user_authentication.response.username",
+          "userId": "user_authentication.response.id",
+          "roles":"user_authorization.response.roles"
+        }
+      },
+      "val": {
+        "method": "POST",
+        "url": "https://run.mocky.io/v3/0df407a1-d4ea-41b3-bf2d-31f3c0fe03b5"
+      }
+    },
+    {
+      "name": "create claim",
+      "mode": "HTTP",
+      "transform" : true,
+      "requestTransform": {
+        "spec":{
+          "claimDetails": "user_authentication.request.claimDetails",
+          "userId": "user_authentication.response.id",
+          "existingPolicies":"get_user_details.response.policyDetails"
+        }
+      },
+      "val": {
+        "method": "POST",
+        "url": "https://run.mocky.io/v3/c73e40b4-a044-44bd-931a-d0f08d58f0d3"
+      }
+    },
+    {
+      "name": "submit motor claim",
+      "when": "user_authentication.request.claimDetails.claimType == 'MOTOR'",
+      "mode": "AMQP",
+      "transform" : true,
+      "requestTransform": {
+        "spec":{
+          "claimId": "create_claim.response.claimId",
+          "userId": "user_authentication.response.id",
+          "claimStatus": "create_claim.response.claimStatus",
+          "claimType": "user_authentication.request.claimDetails.claimType",
+          "claimDate": "create_claim.response.claimDate",
+          "policyId": "create_claim.response.policyId",
+          "garageId":"create_claim.response.garageId",
+          "inspectorDetails":"create_claim.response.inspectorDetails"
+        }
+      },
+      "val": {
+        "connection_url": "amqp://clamp:clamp@rabbitmq:5672/",
+        "queue_name": "clamp_queue",
+        "content_type": "text/plain"
+      }
+    },
+    {
+      "name": "submit medical claim",
+      "when": "user_authentication.request.claimDetails.claimType == 'MEDICAL'",
+      "mode": "AMQP",
+      "transform" : true,
+      "requestTransform": {
+        "spec":{
+          "claimId": "create_claim.response.claimId",
+          "userId": "user_authentication.response.id",
+          "claimStatus": "create_claim.response.claimStatus",
+          "claimType": "user_authentication.request.claimDetails.claimType",
+          "claimDate": "create_claim.response.claimDate",
+          "policyId": "create_claim.response.policyId",
+          "garageId":"create_claim.response.garageId",
+          "inspectorDetails":"create_claim.response.inspectorDetails"
+        }
+      },
+      "val": {
+        "connection_url": "amqp://clamp:clamp@rabbitmq:5672/",
+        "queue_name": "clamp_queue",
+        "content_type": "text/plain"
+      }
+    },
+    {
+      "name": "update approved claim",
+      "when": "update_approved_claim.request.claimStatus == 'APPROVED'",
+      "mode": "HTTP",
+      "val": {
+        "method": "POST",
+        "url": "https://run.mocky.io/v3/39528702-f29f-4a87-98e7-55b43c81fed3"
+      }
+    },
+    {
+      "name": "update reject claim",
+      "when": "update_reject_claim.request.claimStatus == 'REJECTED'",
+      "mode": "HTTP",
+      "val": {
+        "method": "POST",
+        "url": "https://run.mocky.io/v3/b0ab4d1c-263b-41f5-9888-c8913160c20f"
+      }
+    },
+    {
+      "name": "process disbursement",
+      "when": "update_approved_claim.request.claimStatus == 'APPROVED'",
+      "mode": "HTTP",
+      "transform" : true,
+      "requestTransform": {
+        "spec":{
+          "claimId": "create_claim.response.claimId",
+          "userId": "user_authentication.response.id",
+          "claimStatus":"process_disbursement.request.claimStatus",
+          "approvedAmount":"process_disbursement.request.reviewerDetails.approvedAmount",
+          "reviewerId":"process_disbursement.request.reviewerDetails.reviewerId",
+          "reviewerDate":"process_disbursement.request.reviewerDetails.reviewDate"
+        }
+      },
+      "val": {
+        "method": "POST",
+        "url": "https://run.mocky.io/v3/a2a9bb05-f043-4a6e-b513-0377902bd85d"
+      }
+    },
+    {
+      "name": "notify approval status",
+      "when": "update_approved_claim.request.claimStatus == 'APPROVED'",
+      "mode": "HTTP",
+      "transform" : true,
+      "requestTransform": {
+        "spec":{
+          "claimId": "create_claim.response.claimId",
+          "claimType": "user_authentication.request.claimDetails.claimType",
+          "userId": "user_authentication.response.id",
+          "claimStatus":"update_approved_claim.request.claimStatus",
+          "disbursedAmount":"process_disbursement.response.disbursedAmount",
+          "mobileNumber":"get_user_details.response.mobileNumber",
+          "emailId":"get_user_details.response.emailId",
+          "username":"user_authentication.response.username",
+          "reviewerName":"update_approved_claim.response.reviewerDetails.reviewerName",
+          "disbursementDate":"process_disbursement.response.disbursementDate",
+          "partyName":"process_disbursement.response.partyDetails.partyName"
+        }
+      },
+      "val": {
+        "method": "POST",
+        "url": "https://run.mocky.io/v3/182bb362-ff16-44ca-a43c-d66107ee549a"
+      }
+    },
+    {
+      "name": "notify rejection status",
+      "when": "update_reject_claim.request.claimStatus == 'REJECTED'",
+      "mode": "HTTP",
+      "transform" : true,
+      "requestTransform": {
+        "spec":{
+          "claimId": "create_claim.response.claimId",
+          "claimType": "user_authentication.request.claimDetails.claimType",
+          "userId": "user_authentication.response.id",
+          "claimStatus":"update_reject_claim.request.claimStatus",
+          "disbursedAmount":"update_reject_claim.response.reviewerDetails.approvedAmount",
+          "mobileNumber":"get_user_details.response.mobileNumber",
+          "emailId":"get_user_details.response.emailId",
+          "username":"user_authentication.response.username",
+          "reviewerName":"update_reject_claim.response.reviewerDetails.reviewerName"
+        }
+      },
+      "val": {
+        "method": "POST",
+        "url": "https://run.mocky.io/v3/ebb3928f-f64e-4df3-b83f-41e9a28ed9a9"
+      }
+    }
+
+  ]
+}

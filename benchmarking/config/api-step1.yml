@@ -1,0 +1,224 @@
+request: 
+  method: GET
+  path: /api/step1
+response:
+  statusCode: 200
+  headers:
+    Content-Type: 
+      - "application/json"
+  body: >
+    {
+       "Objects": [{
+        "dMarketValueBeforeTrade": "10216333.000000",
+        "price": "950.000000",
+        "transaction": [
+        {
+         "account": [{
+          "maxPctHiYield": "35.000000",
+          "dPositionHiYield": "330000.000000",
+          "dPositionHiGrade": "819167.000000",
+          "securityPosition": [
+          {
+           "quantity": "5000",
+           "dMarketValue": "819167.000000",
+           "security": [{
+            "symbol": "PMBND",
+            "yield": "6.000000",
+            "daysInHolding": "23",
+            "dMarketValue": "164.000000",
+            "dProfile": "HI-GRD",
+            "dAnnualInterestAmt": "60.000000",
+            "price": "160.000000",
+            "issuer": "Phillip Morris",
+            "sin": "Y",
+            "dAccruedInterest": "4.000000",
+            "faceValue": "1000.000000",
+            "rating": "A",
+            "__metadata": {
+            "#id": "Security_id_1",
+            "#type": "Security"
+            }
+           }],
+           "__metadata": {
+            "#id": "SecurityPosition_id_1",
+            "#type": "SecurityPosition"
+           }
+          },
+          {
+           "quantity": "3000",
+           "dMarketValue": "330000.000000",
+           "security": [{
+            "symbol": "3MBND",
+            "yield": "12.000000",
+            "daysInHolding": "40",
+            "dMarketValue": "110.000000",
+            "dProfile": "HI-YLD",
+            "dAnnualInterestAmt": "90.000000",
+            "price": "100.000000",
+            "issuer": "3M",
+            "sin": "N",
+            "dAccruedInterest": "10.000000",
+            "faceValue": "1000.000000",
+            "rating": "B",
+            "__metadata": {
+            "#id": "Security_id_3",
+            "#type": "Security"
+            }
+           }],
+           "__metadata": {
+            "#id": "SecurityPosition_id_2",
+            "#type": "SecurityPosition"
+           }
+          }
+          ],
+          "warnMargin": "3.000000",
+          "name": "Boeing",
+          "restricted": "false",
+          "maxPctHiGrade": "75.000000",
+          "number": "1640",
+          "dMarketValue": "1149167.000000",
+          "__metadata": {
+          "#id": "Account_id_1",
+          "#type": "Account"
+          }
+         }],
+         "security": [{"__metadata": {"#ref_id": "Security_id_2"}}],
+         "__metadata": {
+          "#id": "Transaction_id_1",
+          "#type": "Transaction"
+         }
+        },
+        {
+         "account": [{
+          "maxPctHiYield": "65.000000",
+          "dPositionHiYield": "2495556.000000",
+          "dPositionHiGrade": "819167.000000",
+          "securityPosition": [
+          {
+           "quantity": "5000",
+           "dMarketValue": "819167.000000",
+           "security": [{"__metadata": {"#ref_id": "Security_id_1"}}],
+           "__metadata": {
+            "#id": "SecurityPosition_id_3",
+            "#type": "SecurityPosition"
+           }
+          },
+          {
+           "quantity": "2000",
+           "dMarketValue": "295556.000000",
+           "security": [{"__metadata": {"#ref_id": "Security_id_2"}}],
+           "__metadata": {
+            "#id": "SecurityPosition_id_4",
+            "#type": "SecurityPosition"
+           }
+          },
+          {
+           "quantity": "20000",
+           "dMarketValue": "2200000.000000",
+           "security": [{"__metadata": {"#ref_id": "Security_id_3"}}],
+           "__metadata": {
+            "#id": "SecurityPosition_id_5",
+            "#type": "SecurityPosition"
+           }
+          }
+          ],
+          "warnMargin": "3.000000",
+          "name": "Sears",
+          "restricted": "true",
+          "maxPctHiGrade": "45.000000",
+          "number": "1920",
+          "dMarketValue": "3314722.000000",
+          "__metadata": {
+          "#id": "Account_id_2",
+          "#type": "Account"
+          }
+         }],
+         "security": [{"__metadata": {"#ref_id": "Security_id_2"}}],
+         "__metadata": {
+          "#id": "Transaction_id_2",
+          "#type": "Transaction"
+         }
+        },
+        {
+         "account": [{
+          "maxPctHiYield": "70.000000",
+          "dPositionHiYield": "4769444.000000",
+          "dPositionHiGrade": "983000.000000",
+          "securityPosition": [
+          {
+           "quantity": "6000",
+           "dMarketValue": "983000.000000",
+           "security": [{"__metadata": {"#ref_id": "Security_id_1"}}],
+           "__metadata": {
+            "#id": "SecurityPosition_id_6",
+            "#type": "SecurityPosition"
+           }
+          },
+          {
+           "quantity": "2500",
+           "dMarketValue": "369444.000000",
+           "security": [{"__metadata": {"#ref_id": "Security_id_2"}}],
+           "__metadata": {
+            "#id": "SecurityPosition_id_7",
+            "#type": "SecurityPosition"
+           }
+          },
+          {
+           "quantity": "40000",
+           "dMarketValue": "4400000.000000",
+           "security": [{"__metadata": {"#ref_id": "Security_id_3"}}],
+           "__metadata": {
+            "#id": "SecurityPosition_id_8",
+            "#type": "SecurityPosition"
+           }
+          }
+          ],
+          "warnMargin": "2.000000",
+          "name": "Airbus",
+          "restricted": "false",
+          "maxPctHiGrade": "35.000000",
+          "number": "2750",
+          "dMarketValue": "5752444.000000",
+          "__metadata": {
+          "#id": "Account_id_3",
+          "#type": "Account"
+          }
+         }],
+         "security": [{"__metadata": {"#ref_id": "Security_id_2"}}],
+         "__metadata": {
+          "#id": "Transaction_id_3",
+          "#type": "Transaction"
+         }
+        }
+        ],
+        "dAccruedInterest": "38889.000000",
+        "quantity": "5000.000000",
+        "security": {
+        "symbol": "BGBND",
+        "yield": "11.000000",
+        "daysInHolding": "40",
+        "dMarketValue": "148.000000",
+        "dProfile": "HI-YLD",
+        "dAnnualInterestAmt": "80.000000",
+        "price": "140.000000",
+        "issuer": "Boeing",
+        "sin": "N",
+        "dAccruedInterest": "8.000000",
+        "faceValue": "1000.000000",
+        "rating": "BBB",
+        "__metadata": {
+         "#id": "Security_id_2",
+         "#type": "Security"
+        }
+        },
+        "__metadata": {
+        "#id": "Trade_id_1",
+        "#type": "Trade"
+        }
+       }],
+       "__metadataRoot": {
+        "#restrictInfoRuleMessages": "true",
+        "#restrictViolationRuleMessages": "true",
+        "#restrictWarningRuleMessages": "false"
+       }
+      }

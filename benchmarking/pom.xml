@@ -63,7 +63,15 @@
         <artifactId>gatling-maven-plugin</artifactId>
         <version>${gatling-maven-plugin.version}</version>
         <configuration>
+          <jvmArgs>
+            <jvmArg>-Denv=stable</jvmArg>
+            <jvmArg>-DconstantRPS=${constantRPS}</jvmArg>
+            <jvmArg>-DdurationMinutes=${durationSeconds}</jvmArg>
+            <jvmArg>-DdurationMaxMinutes=${durationMaxSeconds}</jvmArg>
+            <jvmArg>-Xmx5g</jvmArg>
+          </jvmArgs>
           <simulationClass>clampcore.InitiateWorkflowSimulation</simulationClass>
+          <propagateSystemProperties>true</propagateSystemProperties>
         </configuration>
       </plugin>
     </plugins>

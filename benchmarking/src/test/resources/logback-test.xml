@@ -8,9 +8,19 @@
 		<immediateFlush>false</immediateFlush>
 	</appender>
 
-	<!-- uncomment and set to DEBUG to log all failing HTTP requests -->
-	<!-- uncomment and set to TRACE to log all HTTP requests -->
-	<!--<logger name="io.gatling.http.engine.response" level="TRACE" />-->
+	<timestamp key="timestamp" datePattern="yyyyMMddHHmm"/>
+
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>logs/test-${timestamp}.log</file>
+		<append>true</append>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd},%d{HH:mm:ss.SSS},%msg%n%rEx</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="SimulationLogger" level="INFO" additivity="false" class="scala.clampcore.InitiateWorkflowSimulation">
+		<appender-ref ref="FILE" />
+	</logger>
 
 	<root level="WARN">
 		<appender-ref ref="CONSOLE" />

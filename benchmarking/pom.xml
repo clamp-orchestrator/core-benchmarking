@@ -70,7 +70,7 @@
             <jvmArg>-DdurationMaxMinutes=${durationMaxSeconds}</jvmArg>
             <jvmArg>-Xmx5g</jvmArg>
           </jvmArgs>
-          <simulationClass>clampcore.InitiateWorkflowSimulation</simulationClass>
+          <simulationClass>${gatlingSimulationClass}</simulationClass>
           <propagateSystemProperties>true</propagateSystemProperties>
         </configuration>
       </plugin>

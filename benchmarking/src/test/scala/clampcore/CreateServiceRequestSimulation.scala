@@ -80,7 +80,7 @@ class CreateServiceRequestSimulation extends Simulation {
       .protocols(baseHttp),
 
       createPollServiceRequestScenario.inject(
-        nothingFor(1 second), // needed for Clamp complete workflow creation
+        nothingFor(1 second), // needed for Clamp to complete workflow creation
         rampUsersPerSec(1).to(MAX_RPS).during(DURATION_SECONDS seconds)
       )
       .protocols(baseHttp)

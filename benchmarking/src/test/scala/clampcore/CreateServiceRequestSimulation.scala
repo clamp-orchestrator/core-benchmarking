@@ -12,6 +12,9 @@ import scala.language.postfixOps
 class CreateServiceRequestSimulation extends Simulation {
 
   var logger: Logger = LoggerFactory.getLogger("SimulationLogger")
+  val MAX_RPS = Integer.getInteger("maxRPS", 500).toDouble
+  val DURATION_SECONDS = Integer.getInteger("durationSeconds", 120).toInt
+  val MAX_DURATION_SECONDS = Integer.getInteger("maxDurationSeconds", 300).toInt
 
   var workflowName = ""
 
@@ -77,11 +80,11 @@ class CreateServiceRequestSimulation extends Simulation {
       .protocols(baseHttp),
 
       createPollServiceRequestScenario.inject(
-        nothingFor(1 second),
-        rampUsersPerSec(1).to(500).during(1 minute)
+        nothingFor(1 second), // needed for Clamp complete workflow creation
+        rampUsersPerSec(1).to(MAX_RPS).during(DURATION_SECONDS seconds)
       )
       .protocols(baseHttp)
     )
   )
-  .maxDuration(5 minutes)
+  .maxDuration(MAX_DURATION_SECONDS seconds)
 }

@@ -74,5 +74,9 @@ services:
       CLAMP_DB_CONNECTION_STR: "host=postgres:5432 user=clamp_local dbname=clamp_local password=cl@mpt3st"
       CLAMP_QUEUE_CONNECTION_STR: "amqp://clamp:clamp@rabbitmq:5672/"
       CLAMP_KAFKA_CONNECTION_STR: "kafka:9092"
+    ulimits:
+      nofile:
+        soft: "65536"
+        hard: "65536"
 volumes:
   config:
